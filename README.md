@@ -68,6 +68,8 @@ Clone the repository:
    git clone https://github.com/grayshader3020/Info_Gathering_and_Network_Recon
    
    cd Info_Gathering_and_Network_Recon
+
+   cd recon
    
    ./requirement.sh
    
