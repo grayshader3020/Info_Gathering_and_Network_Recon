@@ -25,14 +25,15 @@ domain = args.domain
 output = args.output
 
 # who is module
-print("[+] Getting whois info..")
-try:
-    domain = socket.gethostbyname(domain)
-except:
-    print("[-] Host resolution failed.")
-    exit()
-whois_result = whois_lookup(domain)
-print(whois_result)
+print("[+]Getting whois info... ")
+#using whois  website to scrap info
+	
+whois_result= whois_lookup(domain)
+
+if whois_result:
+	print(whois_result)
+else:
+	print("WHOIS lookup failed")
 
 # DNS Module
 print("[+] Getting DNS info..")
