@@ -65,26 +65,29 @@ except Exception as e:
 
 print(dns_result)
 # Geolocation module
-print("[+] Getting Geolocation info..")
+
+print("geo location module")
+
 geo_result = ''
 
-"""
-implementing  requests for web request, creating a web request by concatenating ip to it  the gethostbyname fuction in 
-socket library resolves the given domain to ip  
-so that it makes requests through ip and returns the location of given ip 
-for e.g
-https://geolocation-db.com/json/193.68.201.200
-output: {"country_code":"BG","country_name":"Bulgaria","city":null,"postal":null,"latitude":42.7,"longitude":23.3333,"IPv4":"193.68.201.200","state":null}
-"""
+# Implementing socket to get ip from domain
 try:
-    response = requests.request('GET', 'https://geolocation-db.com/json/' + socket.gethostbyname(domain)).json()
-    geo_result += "[+] Country: {}\n".format(response['country_name'])
-    geo_result += "[+] Latitude: {}\n".format(response['latitude'])
-    geo_result += "[+] Longitude: {}\n".format(response['longitude'])
-    geo_result += "[+] City: {}\n".format(response['city'])
-    geo_result += "[+] State: {}\n".format(response['state'])
-except:
-    pass
+	for_ip = socket.gethostbyname(domain)
+except socket.gaierror as e:
+	print(f"Error resolving domoin {domain}: {e}")
+	exit(1)
+
+try:
+    # Correct API endpoint
+    response = requests.get(f"https://ipinfo.io/{for_ip}/json").json()
+  
+
+    #print all key-value pairs  in the response
+    geo_result += json.dumps(response, indent=4)
+
+except requests.exceptions.RequestException as e:
+	print(f"Error fetching geolocation data: {e}")
+
 print(geo_result)
 
 if output:
