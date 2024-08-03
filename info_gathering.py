@@ -63,9 +63,6 @@ try:
 except Exception as e:
 	print(f"[-]Error fetching TXT record:{e}\n")
 
-except Exception as e:
-	print(e)
-
 print(dns_result)
 # Geolocation module
 print("[+] Getting Geolocation info..")
