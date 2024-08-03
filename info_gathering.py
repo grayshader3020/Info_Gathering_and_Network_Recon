@@ -36,22 +36,37 @@ else:
 	print("WHOIS lookup failed")
 
 # DNS Module
-print("[+] Getting DNS info..")
-dns_result = ''
-# Implementing dns.resolver from dnspython which gives us dns info of various records
-try:
-    for a in dns.resolver.resolve(domain, 'A'):
-        dns_result += "[+] A Record: {}\n".format(a.to_text())
-    for ns in dns.resolver.resolve(domain, 'NS'):
-        dns_result += "[+] NS Record: {}\n".format(ns.to_text())
-    for mx in dns.resolver.resolve(domain, 'MX'):
-        dns_result += "[+] MX Record: {}\n".format(mx.to_text())
-    for txt in dns.resolver.resolve(domain, 'txt'):
-        dns_result += "[+] TXt Record: {}\n".format(txt.to_text())
-except:
-    pass
-print(dns_result)
+print("[+]Getting DNS info... ")
 
+dns_result = ''
+try:
+	for a in dns.resolver.resolve(domain,'A'):
+		dns_result += "[+] A record: {}\n".format(a.to_text())
+except Exception as e:
+	print(f"[-]Error fetching A record:{e}\n")
+
+try:
+	for ns in dns.resolver.resolve(domain,'NS'):
+		dns_result += "[+] NS record: {}\n".format(ns.to_text())
+except Exception as e:
+	print(f"[-]Error fetching NS record:{e}\n")
+
+try: 
+	for mx in dns.resolver.resolve(domain,'MX'):
+		dns_result +="[+] MX record: {}\n".format(mx.to_text())
+except Exception as e:
+	print(f"[-]Error fetching MX record:{e}\n")
+
+try:
+	for txt in dns.resolver.resolve(domain,'TXT'):
+		dns_result +="[+] TXT record: {}\n".format(txt.to_text())
+except Exception as e:
+	print(f"[-]Error fetching TXT record:{e}\n")
+
+except Exception as e:
+	print(e)
+
+print(dns_result)
 # Geolocation module
 print("[+] Getting Geolocation info..")
 geo_result = ''
